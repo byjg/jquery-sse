@@ -9,6 +9,7 @@ The server implementation does not needed to change neither the client.
 
 ## Example
 
+Client Side
 
 ```javascript
 var sse = $.SSE('http://example.com/sse-server.php', {
@@ -17,6 +18,13 @@ var sse = $.SSE('http://example.com/sse-server.php', {
 	}
 });
 sse.start();
+```
+
+Server Side
+
+```php
+echo "data: My Message\n";
+echo "\n";
 ```
 
 ## Dependencies
@@ -94,7 +102,7 @@ onMessage: function(e){
 
 **Custom Options**
 
-Define options for the SSE instance
+Define the options for the SSE instance
 
 ```javascript
 options: {
@@ -102,7 +110,7 @@ options: {
 },
 ```
 
-* forceAjax - If true will comunicate with the server only by ajax even if the EventSource object is supported natively;
+* **forceAjax**: If true will comunicate with the server only by ajax even if the EventSource object is supported natively;
 
 
 **Custom Events**
@@ -110,7 +118,6 @@ options: {
 Fired when the server set the event and match with the key
 
 ```javascript
-
 	events: {
 		customEvent: function(e) {
 			console.log('Custom Event');
@@ -118,6 +125,14 @@ Fired when the server set the event and match with the key
 		}	
 	}
 });
+```
+
+Server side:
+
+```php
+echo "event: customEvent\n";   // Must match with events in the HTML.
+echo "data: My Message\n";
+echo "\n";
 ```
 
 ## Quirks
