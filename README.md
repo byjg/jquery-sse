@@ -118,13 +118,12 @@ options: {
 Fired when the server set the event and match with the key
 
 ```javascript
-	events: {
-		customEvent: function(e) {
-			console.log('Custom Event');
-			console.log(e);
-		}	
-	}
-});
+events: {
+	customEvent: function(e) {
+		console.log('Custom Event');
+		console.log(e);
+	}	
+}
 ```
 
 Server side:
