@@ -1,0 +1,28 @@
+{
+  "name": "jquery-sse",
+  "version": "0.1.0",
+  "description": "jQuery Plugin for Server-Sent Events (SSE) EventSource Polyfill",
+  "main": "jquery.sse.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/byjg/jquery-sse.git"
+  },
+  "keywords": [
+    "jquery",
+    "jquery-plugin",
+    "server-sent",
+    "sse",
+    "eventsource"
+  ],
+  "author": "João Gilberto Magalhães",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/byjg/jquery-sse/issues"
+  }
+}
