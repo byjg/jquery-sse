@@ -4,8 +4,8 @@
 
 A lightweigth jQuery Plugin for Server-Sent Events (SSE) EventSource Polyfill. 
 This plugin do not overwrite the native EventSource object if it exists. 
-If there is no native support the request is made by Ajax requests. 
-The server implementation does not needed to change neither the client. 
+If there is no native support the request is made by ajax requests (polling).
+You do not need to change the server side nor the client side.
 
 ## Example
 
@@ -33,7 +33,7 @@ echo "\n";
 
 ## Install
 
-Just download the repository and point the jQuery plugin:
+Just download the repository and point to the jQuery plugin:
 
 ```html
 <script src="jquery.sse.js" ></script>
@@ -45,7 +45,11 @@ or
 <script src="jquery.sse.min.js" ></script>
 ```
 
-*TODO*: install bower.
+You can also install using bower:
+
+```bash
+bower install jquery-sse
+```
 
 ## Usage:
 
@@ -110,7 +114,7 @@ options: {
 },
 ```
 
-* **forceAjax**: If true will comunicate with the server only by ajax even if the EventSource object is supported natively;
+* **forceAjax**: Uses ajax even if the EventSource object is supported natively;
 
 
 **Custom Events**
@@ -136,8 +140,16 @@ echo "\n";
 
 ## Quirks
 
-The ajax does not support the streaming as the event source supports. In that case we recommend create a server without streaming and set the "retry" to determine query frequency; 
+The ajax does not support the streaming as the event source supports. In that case we recommend
+create a server without streaming and set the "retry" to determine query frequency;
 
+Example Server Side:
+
+```php
+echo "retry: 3000\n";
+echo "data: My Message\n";
+echo "\n";
+```
 
 ## References
 
