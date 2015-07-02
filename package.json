@@ -20,11 +20,14 @@
     "sse",
     "eventsource",
     "event-source",
-    "pollyfill"
+    "polyfill"
   ],
   "author": "João Gilberto Magalhães",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/byjg/jquery-sse/issues"
+  },
+  "dependencies": {
+    "jquery": ">=1.7.0"
   }
 }

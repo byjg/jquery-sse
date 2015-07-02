@@ -14,8 +14,11 @@
     "sse",
     "eventsource",
     "event-source",
-    "pollyfill"
+    "polyfill"
   ],
+  "dependencies": {
+    "jquery": ">=1.7.0"
+  },
   "license": "MIT",
   "ignore": [
     "**/.*",
