@@ -138,6 +138,25 @@ echo "data: My Message\n";
 echo "\n";
 ```
 
+#### Methods
+
+**start**
+
+Start the EventSource communication
+
+```javascript
+sse.start();
+```
+
+**stop**
+
+Stop the EventSource communication
+
+```javascript
+sse.stop();
+```
+
+
 ## Quirks
 
 The ajax does not support the streaming as the event source supports. In that case we recommend
