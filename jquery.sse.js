@@ -80,12 +80,12 @@
 
         me.instance.onmessage = me._settings.onMessage;
         me.instance.onopen = function (e) {
-            if (me.instance.successCount++ == 0) {
+            if (me.instance.successCount++ === 0) {
                 me._settings.onOpen(e);
             }
         };
         me.instance.onerror = function (e) {
-            if (event.target.readyState == EventSource.CLOSED) {
+            if (event.target.readyState === EventSource.CLOSED) {
                 me._settings.onError(event);
             }
         };
@@ -119,7 +119,7 @@
                     return;
                 }
 
-                if (me.instance.successCount++ == 0) {
+                if (me.instance.successCount++ === 0) {
                     me._settings.onOpen();
                 }
 
@@ -131,13 +131,13 @@
                 for (var key in lines) {
                     var separatorPos = lines[key].indexOf(":");
                     var item = [
-                        lines[key].substr(0, separatorPos), 
+                        lines[key].substr(0, separatorPos),
                         lines[key].substr(separatorPos + 1)
                     ];
                     switch (item[0]) {
                         // If the first part is empty, needed to check another sequence
                         case "":
-                            if (!item[1] && countBreakLine++ == 1) {  // Avoid comments!
+                            if (!item[1] && countBreakLine++ === 1) {  // Avoid comments!
                                 eventMessage = {
                                     data: me.instance.data,
                                     lastEventId: me.instance.id,
@@ -178,7 +178,7 @@
                             // Define the data to be processed.
                         case "data":
                             countBreakLine = 0;
-                            me.instance.data += (me.instance.data != "" ? "\n" : "") + item[1].trim();
+                            me.instance.data += (me.instance.data !== "" ? "\n" : "") + item[1].trim();
                             break;
 
                         default:
