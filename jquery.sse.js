@@ -142,8 +142,8 @@
                                     data: me.instance.data,
                                     lastEventId: me.instance.id,
                                     origin: 'http://' + info.getResponseHeader('Host'),
-                                    returnValue: true,
-                                }
+                                    returnValue: true
+                                };
 
                                 // If there are a custom event then call it
                                 if (me.instance.event && me._settings.events[me.instance.event]) {
@@ -186,10 +186,10 @@
                     }
                 }
                 setTimeout(function () {
-                    runAjax(me)
+                    runAjax(me);
                 }, me.instance.retry);
             },
-            error: me._settings.onError,
+            error: me._settings.onError
         });
     }
     ;
