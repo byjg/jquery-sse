@@ -20,6 +20,10 @@ echo "id: " . $lastEventId . "\n";
 //echo "event: customEvent\n"; // Set here the custom event;
 echo "data: Last Id is \n";
 echo "data: " . $lastEventId . ";\n\n";
+
+echo "id: " . $lastEventId . "\n";
+echo "data: {\"userid\":1020}\n\n";
+
 ob_flush();
 flush();
 
