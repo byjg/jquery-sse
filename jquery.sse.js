@@ -111,7 +111,7 @@
 
         var headers = {'Last-Event-ID': me.instance.id};
 
-        $.extend(headers, this._settings.headers);
+        $.extend(headers, me._settings.headers);
 
         $.ajax({
             url: me._url,
