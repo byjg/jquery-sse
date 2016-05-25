@@ -3,7 +3,7 @@
 ## Description
 
 A lightweigth jQuery Plugin for Server-Sent Events (SSE) EventSource Polyfill. 
-This plugin do not overwrite the native EventSource object if it exists. 
+This plugin try to use the native EventSource object if it supported by the browser.
 If there is no native support the request is made by ajax requests (polling).
 You do not need to change the server side nor the client side.
 
@@ -13,9 +13,9 @@ Client Side
 
 ```javascript
 var sse = $.SSE('http://example.com/sse-server.php', {
-	onMessage: function(e){ 
-		console.log("Message"); console.log(e); 
-	}
+    onMessage: function(e){ 
+        console.log("Message"); console.log(e); 
+    }
 });
 sse.start();
 ```
@@ -64,13 +64,27 @@ var sse = $.SSE(url, settings);
 
 #### Settings List
 
+All the options:
+
+```
+var sseObject = $.SSE('sse-server.php', {
+    onOpen: function (e) {},
+    onEnd: function (e) {},
+    onError: function (e) {},
+    onMessage: function (e) {},
+    options: {},
+    headers: {},
+    events: {}
+});
+```
+
 **Event onOpen**
 
 Fired when the connection is opened the first time;
 
 ```javascript
 onOpen: function(e){ 
-	console.log("Open"); console.log(e); 
+    console.log("Open"); console.log(e); 
 },
 ```
 
@@ -80,7 +94,7 @@ Fired when the connection is closed and the client will not listen for the serve
 
 ```javascript
 onEnd: function(e){ 
-	console.log("End"); console.log(e); 
+    console.log("End"); console.log(e); 
 },
 ```
 
@@ -90,7 +104,7 @@ Fired when the connection error occurs;
 
 ```javascript
 onError: function(e){ 
-	console.log("Could not connect"); 
+    console.log("Could not connect"); 
 },
 ```
 
@@ -100,7 +114,7 @@ Fired when the a message without event is received
 
 ```javascript
 onMessage: function(e){ 
-	console.log("Message"); console.log(e); 
+    console.log("Message"); console.log(e); 
 },
 ```
 
@@ -110,7 +124,7 @@ Define the options for the SSE instance
 
 ```javascript
 options: {
-	forceAjax: false
+    forceAjax: false
 },
 ```
 
@@ -121,22 +135,38 @@ options: {
 
 Fired when the server set the event and match with the key
 
+For example, if you have a custom event called `myEvent` you may use the follow code:
+
 ```javascript
 events: {
-	customEvent: function(e) {
-		console.log('Custom Event');
-		console.log(e);
-	}	
+    myEvent: function(e) {
+        console.log('Custom Event');
+        console.log(e);
+    }
 }
 ```
 
 Server side:
 
 ```php
-echo "event: customEvent\n";   // Must match with events in the HTML.
+echo "event: myEvent\n";   // Must match with events in the HTML.
 echo "data: My Message\n";
 echo "\n";
 ```
+
+**Custom Headers**
+
+You can send custom headers to the request.
+
+```javascript
+headers: {
+    'Authorization', 'Bearer 1a234fd4983d'
+}
+```
+
+Note: As the EventSource does not support send custom headers to the request,
+the object will fallback automatically to 'forceAjax=true', even this it is not set.
+
 
 #### Methods
 

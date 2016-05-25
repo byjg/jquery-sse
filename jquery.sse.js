@@ -22,6 +22,7 @@
                 onMessage: function (e) {
                 },
                 options: {},
+                headers: {},
                 events: {}
             };
 
@@ -37,7 +38,7 @@
                     return false;
                 }
 
-                if (!window.EventSource || this._settings.options.forceAjax) {
+                if (!window.EventSource || this._settings.options.forceAjax || (Object.keys(this._settings.headers).length > 0)) {
                     createAjax(this);
                 } else {
                     createEventSource(this);
@@ -52,7 +53,7 @@
                     return false;
                 }
 
-                if (!window.EventSource || this._settings.options.forceAjax) {
+                if (!window.EventSource || this._settings.options.forceAjax || (Object.keys(this._settings.headers).length > 0)) {
                     // Nothing to do;
                 } else {
                     this.instance.close();
@@ -94,26 +95,28 @@
             me.instance.addEventListener(key, me._settings.events[key], false);
         }
     }
-    ;
-
+    
     // Handle the Ajax instance (fallback)
     function createAjax(me) {
         me.type = 'ajax';
         me.instance = {successCount: 0, id: null, retry: 3000, data: "", event: ""};
         runAjax(me);
     }
-    ;
-
+    
     // Handle the continous Ajax request (fallback)
     function runAjax(me) {
         if (!me.instance) {
             return;
         }
 
+        var headers = {'Last-Event-ID': me.instance.id};
+
+        $.extend(headers, this._settings.headers);
+
         $.ajax({
             url: me._url,
             method: 'GET',
-            headers: {'Last-Event-ID': me.instance.id},
+            headers: headers,
             success: function (receivedData, status, info) {
                 if (!me.instance) {
                     return;
@@ -192,8 +195,6 @@
             error: me._settings.onError
         });
     }
-    ;
-
-
+    
 })(jQuery);
 
