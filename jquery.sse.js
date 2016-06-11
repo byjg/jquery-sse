@@ -1,5 +1,5 @@
 /*
- * jQuery Plugin for Server-Sent Events (SSE) EventSource Polyfill v0.1.0
+ * jQuery Plugin for Server-Sent Events (SSE) EventSource Polyfill v0.1.3
  * https://github.com/byjg/jquery-sse
  *
  * This document is licensed as free software under the terms of the
