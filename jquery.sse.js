@@ -86,8 +86,8 @@
             }
         };
         me.instance.onerror = function (e) {
-            if (event.target.readyState === EventSource.CLOSED) {
-                me._settings.onError(event);
+            if (e.target.readyState === EventSource.CLOSED) {
+                me._settings.onError(e);
             }
         };
 

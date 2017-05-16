@@ -200,6 +200,12 @@ echo "data: My Message\n";
 echo "\n";
 ```
 
+## Minify
+
+```
+uglifyjs --compress 'drop_console,drop_debugger' --mangle -r '$,require,exports,_' -o jquery.sse.min.js jquery.sse.js
+```
+
 ## References
 
 * http://www.w3.org/TR/2009/WD-eventsource-20091029/
