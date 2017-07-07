@@ -7,6 +7,11 @@ This plugin try to use the native EventSource object if it supported by the brow
 If there is no native support the request is made by ajax requests (polling).
 You do not need to change the server side nor the client side.
 
+*If you are looking for a SSE Polyfill library without jQuery dependency
+try [yaj-sse](https://github.com/byjg/yaj-sse). The yaj-sse is a port 
+from version 0.1.4 of jQuery SSE.* 
+
+
 ## Example
 
 Client Side
