@@ -165,7 +165,7 @@ You can send custom headers to the request.
 
 ```javascript
 headers: {
-    'Authorization', 'Bearer 1a234fd4983d'
+    'Authorization': 'Bearer 1a234fd4983d'
 }
 ```
 
