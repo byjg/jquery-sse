@@ -29,6 +29,7 @@
             $.extend(settings, customSettings);
 
             sse._url = url;
+            sse._remoteHost = null;
             sse._settings = settings;
 
             // Start the proper EventSource object or Ajax fallback
@@ -64,7 +65,6 @@
                 this.type = null;
 
                 return true;
-
             };
 
             return sse;
@@ -102,6 +102,90 @@
         me.instance = {successCount: 0, id: null, retry: 3000, data: "", event: ""};
         runAjax(me);
     }
+
+    function handleAjax(me, receivedData) {
+        if (!me.instance) {
+            return;
+        }
+
+        if (me.instance.successCount++ === 0) {
+            me._settings.onOpen();
+        }
+
+        var lines = receivedData.split("\n");
+
+        // Process the return to generate a compatible SSE response
+        me.instance.data = "";
+        var countBreakLine = 0;
+        for (var key in lines) {
+            var separatorPos = lines[key].indexOf(":");
+            var item = [
+                lines[key].substr(0, separatorPos),
+                lines[key].substr(separatorPos + 1)
+            ];
+            switch (item[0]) {
+                // If the first part is empty, needed to check another sequence
+                case "":
+                    if (!item[1] && countBreakLine++ === 1) {  // Avoid comments!
+                        eventMessage = {
+                            data: me.instance.data,
+                            lastEventId: me.instance.id,
+                            origin: 'http://' + me._remoteHost,
+                            returnValue: true
+                        };
+
+                        // If there are a custom event then call it
+                        if (me.instance.event && me._settings.events[me.instance.event]) {
+                            me._settings.events[me.instance.event](eventMessage);
+                        } else {
+                            me._settings.onMessage(eventMessage);
+                        }
+                        me.instance.data = "";
+                        me.instance.event = "";
+                        countBreakLine = 0;
+                    }
+                    break;
+
+                // Define the new retry object;
+                case "retry":
+                    countBreakLine = 0;
+                    me.instance.retry = parseInt(item[1].trim());
+                    break;
+
+                // Define the new ID
+                case "id":
+                    countBreakLine = 0;
+                    me.instance.id = item[1].trim();
+                    break;
+
+                // Define a custom event
+                case "event":
+                    countBreakLine = 0;
+                    me.instance.event = item[1].trim();
+                    break;
+
+                // Define the data to be processed.
+                case "data":
+                    countBreakLine = 0;
+                    me.instance.data += (me.instance.data !== "" ? "\n" : "") + item[1].trim();
+                    break;
+
+                default:
+                    countBreakLine = 0;
+            }
+        }
+    }
+
+    function getRemoteHost(me) {
+        $.ajax({
+            type: 'HEAD',
+            headers: me._settings.headers,
+            url: me._url,
+            complete: function(xhr) {
+                me._remoteHost = xhr.getResponseHeader('Host');
+            }
+        });
+    }
     
     // Handle the continous Ajax request (fallback)
     function runAjax(me) {
@@ -109,85 +193,40 @@
             return;
         }
 
+        if (!me._remoteHost) {
+            getRemoteHost(me);
+        }
+
         var headers = {'Last-Event-ID': me.instance.id};
 
         $.extend(headers, me._settings.headers);
 
+        // https://stackoverflow.com/questions/7740646/jquery-read-ajax-stream-incrementally
+        var lastResponseLen = false;
+        var thisResponse = "";
         $.ajax({
             url: me._url,
             method: 'GET',
             headers: headers,
-            success: function (receivedData, status, info) {
-                if (!me.instance) {
-                    return;
-                }
+            xhrFields: {
+                onprogress: function(e) {
+                    var response = e.currentTarget.response;
+                    if(lastResponseLen === false) {
+                        thisResponse += response;
+                    } else {
+                        thisResponse += response.substring(lastResponseLen);
+                    }
+                    lastResponseLen = response.length;
 
-                if (me.instance.successCount++ === 0) {
-                    me._settings.onOpen();
-                }
-
-                var lines = receivedData.split("\n");
-
-                // Process the return to generate a compatible SSE response
-                me.instance.data = "";
-                var countBreakLine = 0;
-                for (var key in lines) {
-                    var separatorPos = lines[key].indexOf(":");
-                    var item = [
-                        lines[key].substr(0, separatorPos),
-                        lines[key].substr(separatorPos + 1)
-                    ];
-                    switch (item[0]) {
-                        // If the first part is empty, needed to check another sequence
-                        case "":
-                            if (!item[1] && countBreakLine++ === 1) {  // Avoid comments!
-                                eventMessage = {
-                                    data: me.instance.data,
-                                    lastEventId: me.instance.id,
-                                    origin: 'http://' + info.getResponseHeader('Host'),
-                                    returnValue: true
-                                };
-
-                                // If there are a custom event then call it
-                                if (me.instance.event && me._settings.events[me.instance.event]) {
-                                    me._settings.events[me.instance.event](eventMessage);
-                                } else {
-                                    me._settings.onMessage(eventMessage);
-                                }
-                                me.instance.data = "";
-                                me.instance.event = "";
-                                countBreakLine = 0;
-                            }
-                            break;
-
-                            // Define the new retry object;
-                        case "retry":
-                            countBreakLine = 0;
-                            me.instance.retry = parseInt(item[1].trim());
-                            break;
-
-                            // Define the new ID
-                        case "id":
-                            countBreakLine = 0;
-                            me.instance.id = item[1].trim();
-                            break;
-
-                            // Define a custom event
-                        case "event":
-                            countBreakLine = 0;
-                            me.instance.event = item[1].trim();
-                            break;
-
-                            // Define the data to be processed.
-                        case "data":
-                            countBreakLine = 0;
-                            me.instance.data += (me.instance.data !== "" ? "\n" : "") + item[1].trim();
-                            break;
-
-                        default:
-                            countBreakLine = 0;
+                    var hasFullMessage = thisResponse.lastIndexOf("\n\n");
+                    if (hasFullMessage >= 0) {
+                        var chunk = thisResponse.substring(0, hasFullMessage + 2);
+                        thisResponse = thisResponse.substring(hasFullMessage + 2);
+                        handleAjax(me, chunk)
                     }
                 }
+            },
+            success: function () {
                 setTimeout(function () {
                     runAjax(me);
                 }, me.instance.retry);
