@@ -1,4 +1,10 @@
-# jQuery SSE 
+# jQuery SSE
+
+[![Build Status](https://github.com/byjg/jquery-sse/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/byjg/jquery-sse/actions/workflows/build.yml)
+[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
+[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/jquery-sse/)
+[![GitHub license](https://img.shields.io/github/license/byjg/jquery-sse.svg)](https://opensource.byjg.com/opensource/licensing.html)
+[![GitHub release](https://img.shields.io/github/release/byjg/jquery-sse.svg)](https://github.com/byjg/jquery-sse/releases/)
 
 A lightweigth jQuery Plugin for Server-Sent Events (SSE) EventSource Polyfill. 
 This plugin try to use the native EventSource object if it supported by the browser.
@@ -6,11 +12,10 @@ If there is no native support the request is made by ajax requests (polling).
 You do not need to change the server side nor the client side.
 
 *If you are looking for a SSE Polyfill library without jQuery dependency
-try [yaj-sse](https://github.com/byjg/yaj-sse). The yaj-sse is a port 
-from version 0.1.4 of jQuery SSE.* 
+try [yaj-sse](https://github.com/byjg/yaj-sse). The yaj-sse is a port
+from version 0.1.4 of jQuery SSE.*
 
-
-# Example
+## Example
 
 Client Side
 
@@ -30,11 +35,11 @@ echo "data: My Message\n";
 echo "\n";
 ```
 
-# Dependencies
+## Dependencies
 
 * jQuery
 
-# Install
+## Install
 
 Just download the repository and point to the jQuery plugin:
 
@@ -54,9 +59,9 @@ You can also install using bower:
 bower install jquery-sse
 ```
 
-# Usage:
+## Usage:
 
-## Constructor
+### Constructor
 
 ```
 var sse = $.SSE(url, settings);
@@ -65,7 +70,7 @@ var sse = $.SSE(url, settings);
 * url: URL for the server will be sent the events to this page;
 * settings: The events and options for the SSE instance
 
-## Settings List
+### Settings List
 
 All the options:
 
@@ -171,7 +176,7 @@ Note: As the EventSource does not support send custom headers to the request,
 the object will fallback automatically to 'forceAjax=true', even this it is not set.
 
 
-# Methods
+## Methods
 
 **start**
 
@@ -190,7 +195,7 @@ sse.stop();
 ```
 
 
-# Quirks
+## Quirks
 
 The ajax does not support the streaming as the event source supports. In that case we recommend
 create a server without streaming and set the "retry" to determine query frequency;
@@ -203,18 +208,31 @@ echo "data: My Message\n";
 echo "\n";
 ```
 
-# Minify
+## Minify
 
 ```
+apt install uglifyjs
+
 uglifyjs --compress 'drop_console,drop_debugger' --mangle -r '$,require,exports,_' -o jquery.sse.min.js jquery.sse.js
 ```
 
-# References
+## Running the examples
+
+Start the webserver:
+
+```shell
+docker run -it --rm -p 8080:80 -v $PWD:/var/www/html byjg/php:7.4-fpm-nginx 
+```
+
+Open the browser:
+http://localhost:8080/examples/sse-client.html
+
+## References
 
 * http://www.w3.org/TR/2009/WD-eventsource-20091029/
 * https://developer.mozilla.org/en-US/docs/Server-sent_events/Using_server-sent_events
 * http://html5doctor.com/server-sent-events/
 * http://www.html5rocks.com/en/tutorials/eventsource/basics/
 
-
-
+----
+[Open source ByJG](http://opensource.byjg.com)
