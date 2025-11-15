@@ -16,11 +16,14 @@ jobs:
     strategy:
       matrix:
         node-version:
+          - "22"
+          - "20"
+          - "18"
           - "16"
           - "14"
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
       - run: yarn
 
   Publish:
@@ -29,8 +32,8 @@ jobs:
     if: startsWith(github.ref, 'v')
     
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
@@ -40,11 +43,11 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}      
 
   Documentation:
-    runs-on: 'ubuntu-latest'
-    needs: Build
     if: github.ref == 'refs/heads/master'
-    env:
-      DOC_GITHUB_TOKEN: '${{ secrets.DOC_TOKEN }}'
-    steps:
-      - uses: actions/checkout@v2
-      - run: curl https://opensource.byjg.com/add-doc.sh | bash /dev/stdin js jquery-sse
+    needs: Build
+    uses: byjg/byjg.github.io/.github/workflows/add-doc.yaml@master
+    with:
+      folder: php
+      project: ${{ github.event.repository.name }}
+    secrets:
+      DOC_TOKEN: ${{ secrets.DOC_TOKEN }}
