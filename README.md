@@ -1,4 +1,13 @@
+---
+tags: [node.js, javascript]
+---
+
 # jQuery SSE
+
+A lightweight jQuery Plugin for Server-Sent Events (SSE) EventSource Polyfill.
+This plugin tries to use the native EventSource object if it's supported by the browser.
+If there is no native support, the request is made by Ajax requests (polling).
+You do not need to change the server side nor the client side.
 
 [![Build Status](https://github.com/byjg/jquery-sse/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/byjg/jquery-sse/actions/workflows/build.yml)
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
@@ -6,11 +15,6 @@
 [![GitHub license](https://img.shields.io/github/license/byjg/jquery-sse.svg)](https://opensource.byjg.com/opensource/licensing.html)
 [![GitHub release](https://img.shields.io/github/release/byjg/jquery-sse.svg)](https://github.com/byjg/jquery-sse/releases/)
 [![](https://data.jsdelivr.com/v1/package/npm/jquery-sse/badge)](https://www.jsdelivr.com/package/npm/jquery-sse)
-
-A lightweight jQuery Plugin for Server-Sent Events (SSE) EventSource Polyfill.
-This plugin tries to use the native EventSource object if it's supported by the browser.
-If there is no native support, the request is made by Ajax requests (polling).
-You do not need to change the server side nor the client side.
 
 *If you are looking for an SSE Polyfill library without jQuery dependency
 try [yaj-sse](https://github.com/byjg/yaj-sse). The yaj-sse is a port
