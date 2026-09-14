@@ -12,7 +12,7 @@ You do not need to change the server side nor the client side.
 [![Build Status](https://github.com/byjg/jquery-sse/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/byjg/jquery-sse/actions/workflows/build.yml)
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/jquery-sse/)
-[![GitHub license](https://img.shields.io/github/license/byjg/jquery-sse.svg)](https://opensource.byjg.com/opensource/licensing.html)
+[![GitHub license](https://img.shields.io/github/license/byjg/jquery-sse.svg)](https://opensource.byjg.com/license/)
 [![GitHub release](https://img.shields.io/github/release/byjg/jquery-sse.svg)](https://github.com/byjg/jquery-sse/releases/)
 [![](https://data.jsdelivr.com/v1/package/npm/jquery-sse/badge)](https://www.jsdelivr.com/package/npm/jquery-sse)
 
@@ -97,7 +97,7 @@ Contributions are welcome! Please feel free to submit pull requests or open issu
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://opensource.byjg.com/opensource/licensing.html) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://opensource.byjg.com/license/) file for details.
 
 ----
 [Open source ByJG](http://opensource.byjg.com)

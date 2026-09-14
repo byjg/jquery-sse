@@ -127,7 +127,7 @@ jQuery SSE provides automatic fallback for browsers without native support using
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://opensource.byjg.com/opensource/licensing.html) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://opensource.byjg.com/license/) file for details.
 
 ## Contributing
 
