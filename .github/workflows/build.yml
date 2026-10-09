@@ -20,7 +20,7 @@ jobs:
           - "22"
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - run: yarn
 
   Publish:
@@ -29,8 +29,8 @@ jobs:
     if: startsWith(github.ref, 'v')
     
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'

@@ -11,6 +11,7 @@ You do not need to change the server side nor the client side.
 
 [![Build Status](https://github.com/byjg/jquery-sse/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/byjg/jquery-sse/actions/workflows/build.yml)
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
+[![Install MCP Server](https://img.shields.io/badge/Install-MCP_Server-8A2BE2?logo=modelcontextprotocol&logoColor=white)](https://opensource.byjg.com/docs/ai/mcpserver-byjg-docs/)
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/jquery-sse/)
 [![GitHub license](https://img.shields.io/github/license/byjg/jquery-sse.svg)](https://opensource.byjg.com/license/)
 [![GitHub release](https://img.shields.io/github/release/byjg/jquery-sse.svg)](https://github.com/byjg/jquery-sse/releases/)
